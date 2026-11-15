@@ -5,9 +5,12 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![GUI](https://img.shields.io/badge/GUI-Tkinter%20Canvas-0284C7?style=for-the-badge)](https://docs.python.org/3/library/tkinter.html)
 [![Pruebas](https://img.shields.io/badge/Pruebas-22%2F22%20Exitosas-10B981?style=for-the-badge)](#-comprobación-del-sistema-pruebas)
+[![Docs](https://img.shields.io/badge/Documento-T%C3%A9cnico%20UNIVO-8B5CF6?style=for-the-badge)](docs/documento_tecnico.md)
 
 **Implementación interactiva, visual y educativa del clásico rompecabezas matemático de la Torre de Hanói.**  
 Incluye **interfaz gráfica interactiva con arrastre de discos (Drag & Drop)**, dos temas navideños intercambiables, **modo consola ASCII**, resolvedor automático óptimo paso a paso y suite de pruebas unitarias.
+
+> 📄 **Documentación Académica:** Puedes consultar el informe técnico formal y teórico del proyecto en **[docs/documento_tecnico.md](docs/documento_tecnico.md)**.
 
 </div>
 
@@ -51,7 +54,8 @@ La interfaz gráfica cuenta con gráficos vectoriales dinámicos dibujados en li
 5. [Cómo Jugar: Modo Consola](#-cómo-jugar-modo-consola)
 6. [Reglas del Juego y Fundamentos Matemáticos](#-reglas-del-juego-y-fundamentos-matemáticos)
 7. [Comprobación del Sistema (Pruebas)](#-comprobación-del-sistema-pruebas)
-8. [Preguntas Frecuentes y Solución de Problemas](#-preguntas-frecuentes-y-solución-de-problemas)
+8. [Documentación Técnica y Académica (UNIVO)](#-documentación-técnica-y-académica-univo)
+9. [Preguntas Frecuentes y Solución de Problemas](#-preguntas-frecuentes-y-solución-de-problemas)
 
 ---
 
@@ -119,28 +123,30 @@ graph TD
 ESD-Torre-Hanoi/
 │
 ├── 🧠 Motor del Juego
-│   ├── torres.py          # Implementación de pilas para representar las 3 torres
-│   ├── reglas.py          # Validación de jugadas, contador de pasos y condición de victoria
-│   └── solucion.py        # Algoritmo de recursión que calcula la secuencia óptima de pasos
+│   ├── torres.py                 # Implementación de pilas para representar las 3 torres
+│   ├── reglas.py                 # Validación de jugadas, contador de pasos y condición de victoria
+│   └── solucion.py               # Algoritmo de recursión que calcula la secuencia óptima de pasos
 │
 ├── 🖥️ Interfaz Gráfica (GUI)
-│   ├── main_grafico.py    # Punto de entrada para la aplicación de ventana
-│   ├── vista_grafica.py   # Renderizado en Canvas, interactividad Drag & Drop y HUD
-│   └── temas.py           # Diccionario de estilos visuales (Navidad Noche y Navidad Día)
+│   ├── main_grafico.py           # Punto de entrada para la aplicación de ventana
+│   ├── vista_grafica.py          # Renderizado en Canvas, interactividad Drag & Drop y HUD
+│   └── temas.py                  # Diccionario de estilos visuales (Navidad Noche y Navidad Día)
 │
 ├── ⌨️ Modo Consola
-│   ├── main.py            # Punto de entrada para jugar en terminal
-│   └── vista.py           # Renderizado de torres y discos en caracteres ASCII
+│   ├── main.py                   # Punto de entrada para jugar en terminal
+│   └── vista.py                  # Renderizado de torres y discos en caracteres ASCII
 │
 ├── 🧪 Verificación y Calidad
-│   └── pruebas.py         # 22 pruebas unitarias automatizadas
+│   └── pruebas.py                # 22 pruebas unitarias automatizadas
 │
 └── 📁 Recursos y Documentación
-    ├── README.md          # Manual de usuario y documentación técnica
-    └── assets/            # Capturas de pantalla y recursos gráficos
-        ├── Interfaz1.png  # Captura de pantalla: Tema Navidad Noche
-        ├── Interfaz2.png  # Captura de pantalla: Tema Navidad Día
-        └── interfaz.png   # Referencia de interfaz previa
+    ├── README.md                 # Manual de usuario y guía rápida
+    ├── docs/                     # Documentación técnica y académica
+    │   └── documento_tecnico.md  # Informe formal de Estructuras de Datos (UNIVO)
+    └── assets/                   # Capturas de pantalla y recursos gráficos
+        ├── Interfaz1.png         # Captura de pantalla: Tema Navidad Noche
+        ├── Interfaz2.png         # Captura de pantalla: Tema Navidad Día
+        └── interfaz.png          # Referencia de interfaz previa
 ```
 
 ---
@@ -278,6 +284,25 @@ OK     resolver usa el minimo con 8 discos
 
 Total: 22 | Fallos: 0
 ```
+
+---
+
+## 📚 Documentación Técnica y Académica (UNIVO)
+
+Para una explicación exhaustiva sobre la teoría de ciencias de la computación que fundamenta este proyecto, consulta el informe formal ubicado en:
+
+👉 **[docs/documento_tecnico.md](docs/documento_tecnico.md)**
+
+### Contenido Destacado del Documento Técnico:
+- 🏛️ **Ficha Académica:** Proyecto para la cátedra de **Estructura de Datos** (Parcial 3) en la **Universidad de Oriente (UNIVO)**, a cargo del docente *MSc. William Josué Magaña Cruz*.
+- 👥 **Equipo de Trabajo y Roles:** Distribución de responsabilidades y temas de defensa de los integrantes:
+  1. **Oscar Fabricio Guevara Aguilar (U20250466):** Estructura de datos (Pilas LIFO), lógica central y recursividad algorítmica.
+  2. **Alex Gabriel Rivera Trujillo (U20250475):** Interfaz de consola, representación textual ASCII y bucle interactivo.
+  3. **Henry Aldair Zelaya Cortez (U20251250):** Interfaz gráfica en Tkinter, canvas responsivo, Drag & Drop y doble tema Día/Noche.
+  4. **Isvi José Castillo Cruz (U20251323):** Control de calidad, batería de 22 pruebas unitarias automatizadas y documentación.
+- 🧱 **Justificación Formal de la Pila (LIFO):** Modelado abstracto de datos con operaciones primitivas (`push`, `pop`, `tope`), encapsulamiento e invariantes de estado.
+- ⚡ **Análisis de Complejidad Computacional:** Demostración matemática por recurrencia e inducción de la cota temporal $O(2^n)$ y cota espacial en la pila de llamadas $O(n)$.
+- 🛡️ **Estrategia de Validación:** Análisis de los 22 casos de prueba automatizados y cobertura de condiciones límite.
 
 ---
 
