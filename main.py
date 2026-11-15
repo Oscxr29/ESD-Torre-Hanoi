@@ -16,16 +16,22 @@ def pedir_torre(mensaje):
     return -1   # fuerza el rechazo "esa torre no existe"
 
 def jugar():
-    juego = crear_juego(pedir_discos())
-    while not hay_victoria(juego):
+    while True:
+        juego = crear_juego(pedir_discos())
+        while not hay_victoria(juego):
+            mostrar_juego(juego)
+            origen = pedir_torre("Mover desde la torre (1-3): ")
+            destino = pedir_torre("Mover hacia la torre (1-3): ")
+            valido, motivo = mover_disco(juego, origen, destino)
+            if not valido:
+                print("Movimiento invalido:", motivo)
         mostrar_juego(juego)
-        origen = pedir_torre("Mover desde la torre (1-3): ")
-        destino = pedir_torre("Mover hacia la torre (1-3): ")
-        valido, motivo = mover_disco(juego, origen, destino)
-        if not valido:
-            print("Movimiento invalido:", motivo)
-    mostrar_juego(juego)
-    print("Ganaste en", juego["movimientos"], "movimientos.")
-    print("El minimo posible era", minimo_teorico(juego["discos"]))
+        print("¡Ganaste en", juego["movimientos"], "movimientos!")
+        print("El minimo posible era", minimo_teorico(juego["discos"]))
+        
+        repetir = input("\n¿Deseas jugar otra partida? (s/n): ").strip().lower()
+        if repetir != "s":
+            print("¡Gracias por jugar! Hasta pronto.")
+            break
 
 jugar()

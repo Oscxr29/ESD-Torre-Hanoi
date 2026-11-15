@@ -5,9 +5,8 @@ from vista_grafica import VistaHanoi
 
 def main():
     root = tk.Tk()
-    tema = TEMAS["clasico"]
+    tema = TEMAS["navidad_noche"]
     VistaHanoi(root, tema)
     root.mainloop()
 
-if __name__ == "__main__":
-    main()
+main()

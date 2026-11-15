@@ -1,40 +1,90 @@
-# 🗼 Torre de Hanói — Manual de Usuario
+# 🗼 Torre de Hanói — Edición Navideña 🎄
 
-Bienvenido al juego de la **Torre de Hanói**. Esta aplicación permite jugar tanto en una **interfaz gráfica con ventana** como en la **consola de comandos**, además de incluir un resolvedor automático paso a paso y comprobaciones del sistema.
+<div align="center">
 
-Este manual explica cómo empezar a usar el juego desde cero, cómo interactuar con él y cómo está construido internamente.
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![GUI](https://img.shields.io/badge/GUI-Tkinter%20Canvas-0284C7?style=for-the-badge)](https://docs.python.org/3/library/tkinter.html)
+[![Pruebas](https://img.shields.io/badge/Pruebas-22%2F22%20Exitosas-10B981?style=for-the-badge)](#-comprobación-del-sistema-pruebas)
+
+**Implementación interactiva, visual y educativa del clásico rompecabezas matemático de la Torre de Hanói.**  
+Incluye **interfaz gráfica interactiva con arrastre de discos (Drag & Drop)**, dos temas navideños intercambiables, **modo consola ASCII**, resolvedor automático óptimo paso a paso y suite de pruebas unitarias.
+
+</div>
+
+---
+
+## 📸 Vistas de la Interfaz Gráfica
+
+La interfaz gráfica cuenta con gráficos vectoriales dinámicos dibujados en lienzo (`Canvas`), totalmente escalables a cualquier resolución de monitor y conmutación instantánea de temas:
+
+### 🌙 Modo Navidad (Noche)
+> *Atmósfera nocturna con cielo estrellado, luna creciente luminosa, guirnalda de luces festivas de colores, nieve suave y postes dorados.*
+
+<p align="center">
+  <img src="assets/Interfaz1.png" alt="Torre de Hanói - Modo Noche" width="95%" />
+</p>
+
+### ☀️ Modo Navidad (Día)
+> *Ambiente diurno radiante con cielo celeste, gran sol brillante, nubes invernales, postes de pino y manto de nieve pura iluminada.*
+
+<p align="center">
+  <img src="assets/Interfaz2.png" alt="Torre de Hanói - Modo Día" width="95%" />
+</p>
+
+#### Comparativa Rápida de Temas
+
+| 🌙 Tema Navidad: Noche (`Interfaz1.png`) | ☀️ Tema Navidad: Día (`Interfaz2.png`) |
+| :---: | :---: |
+| ![Miniatura Noche](assets/Interfaz1.png) | ![Miniatura Día](assets/Interfaz2.png) |
+| **Fondo:** Azul medianoche con estrellas y luna | **Fondo:** Celeste brillante con sol radiante y nubes |
+| **Estilo:** Postes dorados con brillo nocturno | **Estilo:** Postes de madera de pino natural |
+| **Botón de acción:** `☀️ Cambiar a Modo Día` | **Botón de acción:** `🌙 Cambiar a Modo Noche` |
 
 ---
 
 ## 📋 Tabla de Contenidos
 
-1. [Requisitos e Instalación](#-requisitos-e-instalación)
-2. [Arquitectura del Proyecto](#-arquitectura-del-proyecto)
-3. [Cómo Jugar: Interfaz Gráfica (Recomendado)](#-cómo-jugar-interfaz-gráfica-recomendado)
-4. [Cómo Jugar: Modo Consola](#-cómo-jugar-modo-consola)
-5. [Reglas del Juego](#-reglas-del-juego)
-6. [Comprobación del Sistema (Pruebas)](#-comprobación-del-sistema-pruebas)
-7. [Preguntas Frecuentes y Solución de Problemas](#-preguntas-frecuentes-y-solución-de-problemas)
+1. [Características Principales](#-características-principales)
+2. [Requisitos e Instalación](#-requisitos-e-instalación)
+3. [Arquitectura del Proyecto](#-arquitectura-del-proyecto)
+4. [Cómo Jugar: Interfaz Gráfica (Recomendado)](#-cómo-jugar-interfaz-gráfica-recomendado)
+5. [Cómo Jugar: Modo Consola](#-cómo-jugar-modo-consola)
+6. [Reglas del Juego y Fundamentos Matemáticos](#-reglas-del-juego-y-fundamentos-matemáticos)
+7. [Comprobación del Sistema (Pruebas)](#-comprobación-del-sistema-pruebas)
+8. [Preguntas Frecuentes y Solución de Problemas](#-preguntas-frecuentes-y-solución-de-problemas)
+
+---
+
+## ✨ Características Principales
+
+- 🎮 **Arrastrar y Soltar (Drag & Drop):** Toma cualquier disco superior con el ratón, arrástralo libremente por la pantalla y suéltalo sobre la torre de destino.
+- 🖱️ **Mover por Clics:** Modo de juego alternativo seleccionando la torre origen (el disco se elevará) y marcando la torre destino.
+- 🎨 **Doble Tema Festivo:** Conmuta entre **Navidad (Noche)** 🌙 y **Navidad (Día)** ☀️ con un solo clic.
+- 🖥️ **Ventana Responsiva y Pantalla Completa:** Pulsa **F11** para alternar a pantalla completa sin perder proporciones; el canvas recalcula automáticamente coordenadas, postes y discos.
+- 🤖 **Resolvedor Automático por Recursión:** Observa paso a paso cómo el algoritmo encuentra la solución matemáticamente perfecta en $2^n - 1$ movimientos.
+- 🔢 **Dificultad Configurable:** Juega con **3 hasta 8 discos**, adaptando el reto desde 7 hasta 255 movimientos mínimos.
+- ⭐ **Celebración de Victoria:** Animación con coronación de la Estrella Dorada en la Torre 3 al completar el árbol.
+- ⌨️ **Modo Consola:** Versión ligera y elegante para terminales y servidores sin entorno gráfico.
+- 🧪 **Pruebas Automatizadas:** 22 verificaciones que garantizan la integridad de las reglas y la estructura de pilas.
 
 ---
 
 ## 🚀 Requisitos e Instalación
 
 ### 1. Requisitos
-- **Python 3.8 o superior** instalado en tu computadora (Windows, Mac o Linux).
-- **No necesitas instalar ninguna librería externa.** Todo funciona con las herramientas incluidas por defecto en Python (`tkinter`).
+- **Python 3.8 o superior** instalado en Windows, macOS o Linux.
+- **Sin dependencias externas:** Funciona 100% con la biblioteca estándar de Python (`tkinter`).
 
-### 2. Comprobar que tienes Python listo
-Abre tu terminal (PowerShell, CMD o Terminal) y escribe:
+### 2. Comprobar instalación de Python
+Abre tu terminal (PowerShell, CMD o bash) y verifica:
 
 ```bash
 python --version
 ```
+*(En Windows también puedes verificar con `py --version`)*.
 
-*(Si en Windows no reconoce `python`, prueba escribiendo `py --version`)*.
-
-### 3. Abrir la carpeta del juego
-Desde la terminal, ubícate en la carpeta donde descargaste el proyecto:
+### 3. Clonar o descargar el repositorio
+Ubícate en el directorio del proyecto:
 
 ```bash
 cd ESD-Torre-Hanoi
@@ -44,7 +94,24 @@ cd ESD-Torre-Hanoi
 
 ## 🏛️ Arquitectura del Proyecto
 
-El proyecto está diseñado bajo una arquitectura limpia y modular: **la lógica del juego está completamente separada de la forma en que se muestra al usuario**. Esto permite que el mismo motor de reglas funcione tanto en la ventana gráfica como en la consola.
+El proyecto está diseñado bajo el principio de **separación de responsabilidades**: el motor matemático y las reglas de validación son completamente independientes de la interfaz gráfica y de la consola.
+
+```mermaid
+graph TD
+    subgraph Núcleo de Lógica
+        T["torres.py<br/>(Estructura de Datos: Pilas)"] --> R["reglas.py<br/>(Validaciones y Reglas del Juego)"]
+        S["solucion.py<br/>(Algoritmo Recursivo Óptimo)"]
+    end
+
+    subgraph Capa de Presentación
+        R --> Consola["Modo Consola<br/>(main.py + vista.py)"]
+        R --> Grafico["Modo Gráfico<br/>(main_grafico.py + vista_grafica.py)"]
+        S --> Grafico
+        TM["temas.py<br/>(Paleta de Colores y Estilos)"] --> Grafico
+        R --> Tests["Suite de Pruebas<br/>(pruebas.py)"]
+        S --> Tests
+    end
+```
 
 ### Estructura de Archivos
 
@@ -52,99 +119,76 @@ El proyecto está diseñado bajo una arquitectura limpia y modular: **la lógica
 ESD-Torre-Hanoi/
 │
 ├── 🧠 Motor del Juego
-│   ├── torres.py          # Maneja las torres como pilas (insertar, sacar y ver tope)
-│   ├── reglas.py          # Aplica las reglas del juego, valida jugadas y cuenta movimientos
-│   └── solucion.py        # Algoritmo inteligente que resuelve el juego automáticamente
+│   ├── torres.py          # Implementación de pilas para representar las 3 torres
+│   ├── reglas.py          # Validación de jugadas, contador de pasos y condición de victoria
+│   └── solucion.py        # Algoritmo de recursión que calcula la secuencia óptima de pasos
 │
-├── 🖥️ Modo Ventana Gráfica
-│   ├── main_grafico.py    # Archivo para iniciar la interfaz gráfica
-│   ├── vista_grafica.py   # Dibuja las torres, discos y botones en la ventana
-│   └── temas.py           # Colores y estilo visual del tablero
+├── 🖥️ Interfaz Gráfica (GUI)
+│   ├── main_grafico.py    # Punto de entrada para la aplicación de ventana
+│   ├── vista_grafica.py   # Renderizado en Canvas, interactividad Drag & Drop y HUD
+│   └── temas.py           # Diccionario de estilos visuales (Navidad Noche y Navidad Día)
 │
 ├── ⌨️ Modo Consola
-│   ├── main.py            # Archivo para iniciar el juego en la terminal
-│   └── vista.py           # Dibuja las torres en texto dentro de la terminal
+│   ├── main.py            # Punto de entrada para jugar en terminal
+│   └── vista.py           # Renderizado de torres y discos en caracteres ASCII
 │
-├── 🧪 Verificación
-│   └── pruebas.py         # Suite de pruebas automáticas para comprobar que todo funciona
+├── 🧪 Verificación y Calidad
+│   └── pruebas.py         # 22 pruebas unitarias automatizadas
 │
-└── 📄 Documentación y Recursos
-    ├── README.md          # Este manual de usuario
-    ├── assets/            # Imágenes y recursos complementarios
-    ├── docs/              # Documentos adicionales
-    └── evidencias/        # Capturas de pantalla de ejemplo
-```
-
-### ¿Cómo se comunican las partes?
-
-```mermaid
-graph TD
-    subgraph Núcleo del Juego
-        T["torres.py<br/>(Estructura de Pilas)"] --> R["reglas.py<br/>(Validaciones y Reglas)"]
-        S["solucion.py<br/>(Algoritmo de Solución)"]
-    end
-
-    subgraph Modos de Uso para el Usuario
-        R --> Consola["Modo Consola<br/>(main.py + vista.py)"]
-        R --> Grafico["Modo Gráfico<br/>(main_grafico.py + vista_grafica.py)"]
-        S --> Grafico
-        TM["temas.py<br/>(Diseño Visual)"] --> Grafico
-        R --> Tests["Modo Pruebas<br/>(pruebas.py)"]
-        S --> Tests
-    end
+└── 📁 Recursos y Documentación
+    ├── README.md          # Manual de usuario y documentación técnica
+    └── assets/            # Capturas de pantalla y recursos gráficos
+        ├── Interfaz1.png  # Captura de pantalla: Tema Navidad Noche
+        ├── Interfaz2.png  # Captura de pantalla: Tema Navidad Día
+        └── interfaz.png   # Referencia de interfaz previa
 ```
 
 ---
 
 ## 🎨 Cómo Jugar: Interfaz Gráfica (Recomendado)
 
-Es la forma más visual e intuitiva de interactuar con el juego.
-
-### 1. Iniciar la ventana
+### 1. Iniciar el juego
 Ejecuta en tu terminal:
 
 ```bash
 python main_grafico.py
 ```
-*(o `py main_grafico.py`)*
+> *(En Windows, si el comando `python` no responde, ejecuta `py main_grafico.py`)*.
 
-Se abrirá una ventana con el tablero de madera, las tres torres y los discos apilados.
+La ventana se iniciará por defecto maximizada, adaptándose a la resolución de tu pantalla con el tema festivo seleccionado.
 
-![Ventana del Juego](assets/interfaz.png)
+### 2. Controles y Funcionalidades
 
-### 2. Controles en la ventana
+| Control / Acción | ¿Cómo se usa? | Descripción |
+|---|---|---|
+| **Arrastrar y Soltar** | Clic sostenido + mover | Haz clic sobre el disco superior de una torre, arrástralo libremente y suéltalo sobre la torre de destino. Si la jugada es ilegal, el disco regresa automáticamente a su posición. |
+| **Mover por Clics** | Clic origen ➔ Clic destino | Haz clic sobre la torre origen (el disco sube visualmente como indicador) y luego haz clic sobre la torre destino. Clic en la misma torre cancela la selección. |
+| **⛶ Pantalla Completa** | Tecla `F11` o botón HUD | Maximiza la experiencia inmersiva. Pulsa `Esc` o `F11` para regresar a la vista de ventana estándar. |
+| **Cambiar Tema Visual** | Botón de tema en el panel | Alterna al instante entre **Navidad (Noche)** 🌙 y **Navidad (Día)** ☀️. |
+| **Selector de Discos** | Flechas de control (Spinbox) | Elige entre **3 y 8 discos** para iniciar una nueva partida con esa dificultad. |
+| **Reiniciar** | Botón `Reiniciar` | Restablece el tablero a su configuración inicial con la cantidad actual de discos. |
+| **Resolver Automático** | Botón `Resolver automático` | Activa la animación recursiva paso a paso que resuelve el juego en el número mínimo teórico de movimientos ($2^n - 1$). |
 
-| Acción | ¿Cómo se hace? |
-|--------|----------------|
-| **Seleccionar disco a mover** | Haz clic sobre la torre que tiene el disco. El disco superior se elevará ligeramente y aparecerá una flecha roja indicando que está seleccionado. |
-| **Colocar el disco** | Haz clic sobre la torre a donde deseas moverlo. El juego validará el movimiento al instante. |
-| **Uso con botones** | Si prefieres no hacer clic en los dibujos, puedes presionar los botones `Torre 1`, `Torre 2` o `Torre 3` situados debajo del lienzo. |
-| **Cambiar dificultad** | En el campo inferior **"Discos"**, usa las flechas para elegir entre **3 y 8 discos** y haz clic en **Reiniciar**. |
-| **Reiniciar la partida** | Presiona el botón **Reiniciar** en cualquier momento para volver a colocar los discos al inicio. |
-| **Resolver automáticamente** | Presiona **Resolver automático (Recursión)**. El juego resolverá la torre por ti paso a paso mediante una animación con el menor número posible de movimientos. |
-
-### 3. Mensajes en pantalla
-- **Mensaje azul/gris:** Te guía sobre qué paso sigue (ejemplo: *"Torre 1 seleccionada como origen"*).
-- **Mensaje rojo:** Te avisa cuando intentas hacer una jugada no permitida y te explica por qué (ejemplo: *"No puedes poner un disco grande sobre uno pequeño"*).
-- **Mensaje verde:** Aparece cuando logras ganar la partida o cuando la solución automática finaliza.
+### 3. Sistema de Mensajes del HUD
+- 🔵 **Mensajes Informativos (Celeste/Azul):** Indican el estado actual de la acción (p. ej., *"Torre 1 seleccionada como origen"* o instrucciones de uso).
+- 🔴 **Mensajes de Advertencia (Rojo):** Te informan el motivo exacto por el cual una jugada no está permitida (p. ej., *"No puedes poner el disco 3 sobre el disco 1, que es más pequeño"*).
+- 🟡 **Mensajes de Celebración (Dorado/Verde):** Se activan al completar la partida o al finalizar la solución automática, mostrando la estrella navideña en la cúspide de la Torre 3.
 
 ---
 
 ## ⌨️ Cómo Jugar: Modo Consola
 
-Si prefieres jugar directamente desde la terminal de texto sin ventanas:
+Para jugar en entornos sin interfaz gráfica o desde una sesión remota:
 
-### 1. Iniciar el juego
-Ejecuta en tu terminal:
-
+### 1. Iniciar la versión de terminal
 ```bash
 python main.py
 ```
 *(o `py main.py`)*
 
-### 2. Flujo del juego
-1. **Elige la cantidad de discos:** Escribe un número entre `3` y `8` y presiona `Enter`.
-2. **Observa el tablero:** Las tres torres aparecerán dibujadas con caracteres de texto:
+### 2. Flujo de Partida
+1. **Configuración inicial:** Introduce el número de discos deseado (entre `3` y `8`) y pulsa `Enter`.
+2. **Visualización del tablero ASCII:**
    ```text
         |              |              |       
        ###             |              |       
@@ -153,50 +197,60 @@ python main.py
      1 ORIGEN      2 AUXILIAR     3 DESTINO   
    Movimientos: 0 | Minimo teorico: 7
    ```
-3. **Realiza tu jugada:**
-   - La terminal te preguntará: `Mover desde la torre (1-3): ` (escribe `1`, `2` o `3` y presiona `Enter`).
-   - Luego te preguntará: `Mover hacia la torre (1-3): ` (escribe el destino y presiona `Enter`).
-4. **Si el movimiento es válido:** El tablero se actualizará y el contador de movimientos sumará 1.
-5. **Si el movimiento es inválido:** El programa te mostrará el error y te permitirá volver a intentar sin penalizar tus movimientos.
-6. **Victoria:** Cuando logres trasladar todos los discos a la **Torre 3 (Destino)**, el juego mostrará un mensaje de felicitaciones con tus estadísticas.
+3. **Ingreso de jugadas:**
+   - La consola solicitará: `Mover desde la torre (1-3): ` (escribe `1`, `2` o `3`).
+   - Luego solicitará: `Mover hacia la torre (1-3): ` (escribe la torre receptora).
+4. **Validación en vivo:**
+   - Jugadas válidas actualizan el gráfico y suman 1 al contador de movimientos.
+   - Jugadas no permitidas muestran el error descriptivo sin penalizar tu contador.
+5. **Fin de partida:** Al trasladar todos los discos a la **Torre 3**, el sistema despliega el resumen estadístico y te ofrece jugar una revancha (`s/n`).
 
 ---
 
-## 📜 Reglas del Juego
+## 📜 Reglas del Juego y Fundamentos Matemáticos
 
-El juego sigue las tres reglas clásicas de la **Torre de Hanói**:
+El rompecabezas respeta estrictamente las tres reglas clásicas:
 
-1. **Solo se puede mover un disco a la vez:** En cada jugada solo puedes tomar el disco que está en la parte superior de una torre.
-2. **Ningún disco grande puede ir sobre uno más pequeño:** Solo puedes colocar un disco en una torre vacía o sobre un disco de mayor tamaño.
-3. **Solo se pueden usar las 3 torres:** El juego inicia con todos los discos ordenados en la **Torre 1 (Origen)** y el objetivo final es llevarlos a la **Torre 3 (Destino)** usando la **Torre 2 (Auxiliar)** como apoyo.
+1. **Un solo disco a la vez:** Solo se puede mover el disco situado en la cima de una torre.
+2. **Restricción de tamaño:** Ningún disco de mayor diámetro puede colocarse encima de uno de menor diámetro.
+3. **Distribución en 3 torres:** Todos los discos inician en la **Torre 1 (Origen)** y deben trasladarse ordenadamente a la **Torre 3 (Destino)**, empleando la **Torre 2 (Auxiliar)** como puente.
 
-### ¿Cuál es la meta?
-Completar el juego en la menor cantidad posible de movimientos. La fórmula matemática para el número mínimo de pasos es:
+### 🧮 Fórmula del Mínimo de Movimientos
 
-$$\text{Mínimo de movimientos} = 2^n - 1$$
+El número mínimo de pasos necesarios para resolver una torre de $n$ discos está determinado por la relación de recurrencia:
 
-*(Donde $n$ es la cantidad de discos)*:
-- **3 discos:** 7 movimientos
-- **4 discos:** 15 movimientos
-- **5 discos:** 31 movimientos
-- **6 discos:** 63 movimientos
-- **7 discos:** 127 movimientos
-- **8 discos:** 255 movimientos
+$$M(n) = 2 \cdot M(n - 1) + 1 \implies M(n) = 2^n - 1$$
+
+| Discos ($n$) | Mínimo Teórico de Movimientos ($2^n - 1$) | Nivel de Dificultad |
+| :---: | :---: | :---: |
+| **3** | **7** | Principiante |
+| **4** | **15** | Fácil |
+| **5** | **31** | Intermedio |
+| **6** | **63** | Avanzado |
+| **7** | **127** | Experto |
+| **8** | **255** | Maestro |
 
 ---
 
 ## 🧪 Comprobación del Sistema (Pruebas)
 
-El proyecto incluye un módulo de autodiagnóstico que verifica que todas las reglas, validaciones, contadores y algoritmos funcionen de forma correcta.
+El proyecto cuenta con una suite integral de **22 pruebas unitarias automáticas** en [pruebas.py](file:///c:/Users/isvij/ESD-Torre-Hanoi/pruebas.py) que verifican el cumplimiento riguroso de reglas, estructuras de pilas y el resolvedor recursivo.
 
-Para ejecutar las pruebas:
+Para ejecutar la verificación:
 
 ```bash
 python pruebas.py
 ```
+*(o `py pruebas.py`)*
 
-### Resultado esperado:
-Todas las comprobaciones deben marcar `OK` y finalizar con cero fallos:
+### Cobertura de Pruebas:
+- ✅ Inserción y extracción de discos en pilas (`torres.py`).
+- ✅ Rechazo de movimientos ilegales (disco mayor sobre menor, torre vacía, torre inexistente).
+- ✅ Inmutabilidad de estado ante movimientos rechazados.
+- ✅ Funcionamiento correcto del contador de movimientos válidos.
+- ✅ Comprobación del cálculo de mínimo teórico para distintas cantidades de discos.
+- ✅ Detección precisa de la condición de victoria.
+- ✅ Optimalidad del resolvedor automático para 3, 4, 5 y 8 discos.
 
 ```text
 OK     mover disco pequeño a torre vacia
@@ -229,18 +283,18 @@ Total: 22 | Fallos: 0
 
 ## ❓ Preguntas Frecuentes y Solución de Problemas
 
-### 1. Me sale: *"python no se reconoce como un comando interno o externo"*
-- En Windows, es muy común que el comando sea `py` en lugar de `python`. Intenta ejecutando:
-  ```bash
-  py main_grafico.py
-  ```
-- Si ninguno funciona, asegúrate de tener Python instalado desde [python.org](https://www.python.org/) y marcar la casilla **"Add python.exe to PATH"** durante la instalación.
+### 1. Mensaje: *"python no se reconoce como un comando interno o externo"*
+En entornos Windows, es habitual que el lanzador estándar sea `py`. Prueba ejecutando:
+```bash
+py main_grafico.py
+```
+Si el inconveniente persiste, asegúrate de activar la casilla **"Add python.exe to PATH"** en el instalador oficial de [python.org](https://www.python.org/).
 
-### 2. ¿Cómo salgo del juego en consola?
-- Puedes presionar `Ctrl + C` en cualquier momento para detener la ejecución y volver a la terminal.
+### 2. ¿Cómo salir de una partida en modo consola?
+Puedes presionar `Ctrl + C` en cualquier instante para interrumpir la ejecución de forma segura y volver a la terminal.
 
-### 3. Hice clic en una torre por error en la ventana gráfica, ¿cómo cancelo?
-- Simplemente haz clic en la misma torre que habías seleccionado. El sistema cancelará la selección y podrás elegir otra.
+### 3. Seleccioné una torre por error con el ratón, ¿cómo cancelo?
+Haz clic nuevamente sobre la misma torre seleccionada. El sistema desmarcará la torre y regresará el disco a su posición de descanso.
 
-### 4. ¿Puedo cambiar la velocidad de la solución automática?
-- Sí. En el archivo [vista_grafica.py](file:///c:/Users/isvij/ESD-Torre-Hanoi/vista_grafica.py), dentro del método `resolver_automatico()`, puedes ajustar el valor de tiempo en `self.root.after(500, ...)` (500 milisegundos por defecto) a un número menor (ej. 250 ms) para que sea más rápido.
+### 4. ¿Cómo ajustar la velocidad de la animación automática?
+En el archivo [vista_grafica.py](file:///c:/Users/isvij/ESD-Torre-Hanoi/vista_grafica.py), localiza la llamada `self.root.after(500, self._dar_paso_solucion)`. Cambia el valor `500` (milisegundos) por un valor menor (ej. `200` para mayor rapidez) o mayor (ej. `800` para observar cada paso detalladamente).
