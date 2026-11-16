@@ -227,20 +227,20 @@ El número mínimo de pasos necesarios para resolver una torre de $n$ discos est
 
 $$M(n) = 2 \cdot M(n - 1) + 1 \implies M(n) = 2^n - 1$$
 
-| Discos ($n$) | Mínimo Teórico de Movimientos ($2^n - 1$) | Nivel de Dificultad |
-| :---: | :---: | :---: |
-| **3** | **7** | Principiante |
-| **4** | **15** | Fácil |
-| **5** | **31** | Intermedio |
-| **6** | **63** | Avanzado |
-| **7** | **127** | Experto |
-| **8** | **255** | Maestro |
+| Discos ($n$) | Mínimo Teórico de Movimientos ($2^n - 1$) |
+| :---: | :---: |
+| **3** | **7** |
+| **4** | **15** |
+| **5** | **31** |
+| **6** | **63** |
+| **7** | **127** |
+| **8** | **255** |
 
 ---
 
 ## 🧪 Comprobación del Sistema (Pruebas)
 
-El proyecto cuenta con una suite integral de **22 pruebas unitarias automáticas** en [pruebas.py](file:///c:/Users/isvij/ESD-Torre-Hanoi/pruebas.py) que verifican el cumplimiento riguroso de reglas, estructuras de pilas y el resolvedor recursivo.
+El proyecto cuenta con **22 pruebas unitarias automáticas** en [pruebas.py](./pruebas.py) que verifican las reglas del juego y el resolvedor recursivo.
 
 Para ejecutar la verificación:
 
@@ -250,7 +250,7 @@ python pruebas.py
 *(o `py pruebas.py`)*
 
 ### Cobertura de Pruebas:
-- ✅ Inserción y extracción de discos en pilas (`torres.py`).
+- ✅ Uso de las operaciones de pilas mediante movimientos válidos (`torres.py` y `reglas.py`).
 - ✅ Rechazo de movimientos ilegales (disco mayor sobre menor, torre vacía, torre inexistente).
 - ✅ Inmutabilidad de estado ante movimientos rechazados.
 - ✅ Funcionamiento correcto del contador de movimientos válidos.
@@ -322,4 +322,4 @@ Puedes presionar `Ctrl + C` en cualquier instante para interrumpir la ejecución
 Haz clic nuevamente sobre la misma torre seleccionada. El sistema desmarcará la torre y regresará el disco a su posición de descanso.
 
 ### 4. ¿Cómo ajustar la velocidad de la animación automática?
-En el archivo [vista_grafica.py](file:///c:/Users/isvij/ESD-Torre-Hanoi/vista_grafica.py), localiza la llamada `self.root.after(500, self._dar_paso_solucion)`. Cambia el valor `500` (milisegundos) por un valor menor (ej. `200` para mayor rapidez) o mayor (ej. `800` para observar cada paso detalladamente).
+En el archivo [vista_grafica.py](./vista_grafica.py), localiza la llamada `self.root.after(450, lambda: ejecutar_paso(indice + 1))`. Cambia el valor `450` (milisegundos) por un valor menor para mayor rapidez o mayor para observar cada paso detalladamente.

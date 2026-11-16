@@ -1,18 +1,27 @@
-# Archivos de compilación y caché de Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 
-*.pyc
-*.pyo
-*.pyd
-
 # Entornos virtuales
-env/
-venv/
 .venv/
+venv/
+env/
+ENV/
 
-# Editores y configuraciones de IDE
+# Cachés y cobertura
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Distribución
+dist/
+build/
+*.egg-info/
+
+# Editores
 .vscode/
 .idea/
 *.swp
@@ -21,27 +30,3 @@ venv/
 # Sistema operativo
 .DS_Store
 Thumbs.db
-=======
-
-# Entornos y herramientas de Python
-.venv/
-venv/
-env/
-ENV/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-dist/
-build/
-*.egg-info/
-
-# Editores
-.idea/
-.vscode/
-
-# Sistema operativo
-.DS_Store
-Thumbs.db
-

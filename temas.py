@@ -13,6 +13,7 @@ TEMAS = {
         "base_sombra": "#1E293B",
         "texto": "#FFFFFF",          # Texto blanco brillante
         "texto_hud": "#F8FAFC",
+        "texto_base": "#0F172A",     # texto oscuro sobre la nieve
         "mensaje_normal": "#93C5FD", # Celeste luminoso
         "mensaje_error": "#FF6B6B",  # Rojo suave visible en noche
         "mensaje_victoria": "#FACC15",# Oro brillante
@@ -31,6 +32,7 @@ TEMAS = {
             "#FACC15",  # 7: Oro brillante
             "#FEF3C7"   # 8: Crema nieve
         ],
+        "texto_disco": ["#0F172A", "#0F172A", "#0F172A", "#0F172A", "#0F172A", "#0F172A", "#0F172A", "#0F172A"],
         "titulo": "Torre de Hanói: Navidad (Noche) 🌙",
         "victoria_titulo": "¡Felices fiestas!",
         "victoria": "¡Felices fiestas! Completaste el árbol bajo el cielo estrellado."
@@ -47,6 +49,7 @@ TEMAS = {
         "base_sombra": "#94A3B8",
         "texto": "#0F172A",          # Azul marino oscuro muy legible
         "texto_hud": "#0F172A",
+        "texto_base": "#0F172A",     # texto oscuro sobre la nieve
         "mensaje_normal": "#1E3A8A", # Azul marino
         "mensaje_error": "#DC2626",  # Rojo puro de advertencia
         "mensaje_victoria": "#15803D",# Verde pino diurno
@@ -57,7 +60,7 @@ TEMAS = {
         "btn_tema_fg": "#FFFFFF",
         "discos": [
             "#DC2626",  # 1: Rojo acebo
-            "#0284C7",  # 2: Azul zafiro
+            "#0369A1",  # 2: Azul zafiro
             "#16A34A",  # 3: Verde pino festivo
             "#7C3AED",  # 4: Púrpura real
             "#EA580C",  # 5: Naranja mandarina
@@ -65,6 +68,7 @@ TEMAS = {
             "#CA8A04",  # 7: Mostaza dorada
             "#FEF08A"   # 8: Amarillo pastel
         ],
+        "texto_disco": ["#FFFFFF", "#FFFFFF", "#0F172A", "#FFFFFF", "#0F172A", "#FFFFFF", "#0F172A", "#0F172A"],
         "titulo": "Torre de Hanói: Navidad (Día) ☀️",
         "victoria_titulo": "¡Felices fiestas!",
         "victoria": "¡Felices fiestas! Completaste el árbol a la luz del día."

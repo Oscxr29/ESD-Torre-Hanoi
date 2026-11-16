@@ -100,20 +100,20 @@ class VistaHanoi:
         self.lbl_mensaje.pack(side=tk.LEFT, expand=True, padx=10)
 
         # Controles rápidos de pantalla y discos
-        frame_hud_derecha = tk.Frame(self.frame_hud, bg=self.tema["fondo"])
-        frame_hud_derecha.pack(side=tk.RIGHT, padx=10)
+        self.frame_hud_derecha = tk.Frame(self.frame_hud, bg=self.tema["fondo"])
+        self.frame_hud_derecha.pack(side=tk.RIGHT, padx=10)
 
-        lbl_discos = tk.Label(
-            frame_hud_derecha,
+        self.lbl_discos = tk.Label(
+            self.frame_hud_derecha,
             text="Discos:",
             font=("Segoe UI", 11, "bold"),
             bg=self.tema["fondo"],
             fg=self.tema["texto_hud"]
         )
-        lbl_discos.pack(side=tk.LEFT, padx=(5, 5))
+        self.lbl_discos.pack(side=tk.LEFT, padx=(5, 5))
 
         self.spin_discos = tk.Spinbox(
-            frame_hud_derecha,
+            self.frame_hud_derecha,
             from_=3,
             to=8,
             width=3,
@@ -126,7 +126,7 @@ class VistaHanoi:
         self.spin_discos.pack(side=tk.LEFT, padx=(0, 10))
 
         self.btn_fullscreen = tk.Button(
-            frame_hud_derecha,
+            self.frame_hud_derecha,
             text="⛶ Pantalla Completa (F11)",
             font=("Segoe UI", 9, "bold"),
             bg="#374151",
@@ -208,14 +208,14 @@ class VistaHanoi:
         )
         self.btn_tema.pack(side=tk.LEFT, padx=10)
 
-        lbl_ayuda = tk.Label(
+        self.lbl_ayuda = tk.Label(
             self.frame_inferior,
             text="Arrastra los discos libremente o haz clic para mover | F11: Pantalla completa",
             font=("Segoe UI", 9, "italic"),
             bg=self.tema["fondo"],
             fg=self.tema["mensaje_normal"]
         )
-        lbl_ayuda.pack(side=tk.RIGHT, padx=10)
+        self.lbl_ayuda.pack(side=tk.RIGHT, padx=10)
 
     def al_redimensionar(self, evento):
         if evento.width > 50 and evento.height > 50:
@@ -278,12 +278,28 @@ class VistaHanoi:
             bg=self.tema["fondo"],
             fg=self.tema["mensaje_normal"]
         )
+        self.root.title(self.tema["titulo"])
+        self.frame_hud_derecha.configure(bg=self.tema["fondo"])
+        self.lbl_discos.configure(
+            bg=self.tema["fondo"],
+            fg=self.tema["texto_hud"]
+        )
+        self.lbl_ayuda.configure(
+            bg=self.tema["fondo"],
+            fg=self.tema["mensaje_normal"]
+        )
         self.btn_tema.configure(
             text=self.tema["btn_tema_txt"],
             bg=self.tema["btn_tema_bg"],
             fg=self.tema["btn_tema_fg"]
         )
         self.canvas.configure(bg=self.tema["canvas_fondo"])
+
+        if hay_victoria(self.juego):
+            self.lbl_mensaje.configure(
+                text=f"{self.tema['victoria']} Movimientos: {self.juego['movimientos']} (Mínimo: {minimo_teorico(self.juego['discos'])}).",
+                fg=self.tema["mensaje_victoria"]
+            )
 
         self.actualizar_vista()
 
@@ -524,7 +540,8 @@ class VistaHanoi:
         self.canvas.create_text(
             (x1 + x2) // 2, (y1 + y2) // 2,
             text=str(texto),
-            fill="white" if color != "#FEF08A" and color != "#FEF3CD" else "#1F2937",
+            # color del numero definido por tema para conservar el contraste
+            fill=self.tema["texto_disco"][(texto - 1) % len(self.tema["texto_disco"])],
             font=("Segoe UI", 10, "bold")
         )
 
@@ -627,7 +644,7 @@ class VistaHanoi:
                 x, self.y_base + 35,
                 text=nombres[i],
                 font=("Segoe UI", 12, "bold"),
-                fill=self.tema["texto"]
+                fill=self.tema["texto_base"]
             )
 
         # 5. Dibujar los discos en cada torre
