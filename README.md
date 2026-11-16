@@ -1,4 +1,4 @@
-# 🗼 Torre de Hanói — Edición Navideña 🎄
+# Torre de Hanói — Edición Navideña 
 
 <div align="center">
 
