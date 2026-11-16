@@ -1,4 +1,22 @@
+# Archivos de compilación y caché de Python
 __pycache__/
+*.py[cod]
+*$py.class
 *.pyc
-.idea/
+*.pyo
+*.pyd
+
+# Entornos virtuales
+env/
+venv/
+.venv/
+
+# Editores y configuraciones de IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
