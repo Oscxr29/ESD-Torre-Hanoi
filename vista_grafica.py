@@ -1,7 +1,7 @@
 # vista_grafica.py: interfaz grafica interactiva con modos dia y noche y arrastrar discos
 import tkinter as tk
 import math
-from reglas import crear_juego, mover_disco, hay_victoria, minimo_teorico
+from reglas import crear_juego, mover_disco, hay_victoria, minimo_teorico, validar_movimiento
 from solucion import resolver
 from temas import TEMAS
 
@@ -24,6 +24,8 @@ class VistaHanoi:
         self.drag_current_x = 0
         self.drag_current_y = 0
         self.drag_activo = False
+        self.ambiente_paso = 0
+        self.efecto_movimiento = None
 
         # Configuración de ventana
         self.root.title(self.tema.get("titulo", "Torre de Hanói: Navidad"))
@@ -46,8 +48,8 @@ class VistaHanoi:
         self.ancho_canvas = 1000
         self.alto_canvas = 480
         self.pos_x = [220, 500, 780]
-        self.y_base = 380
-        self.y_tope_palo = 120
+        self.y_base = 400
+        self.y_tope_palo = 115
 
         # Copos de nieve / estrellas fijos normalizados (entre 0.0 y 1.0)
         self.copos = [
@@ -60,6 +62,7 @@ class VistaHanoi:
 
         self.crear_componentes()
         self.actualizar_vista()
+        self.root.after(180, self.animar_ambiente)
 
     def crear_componentes(self):
         # 1. Panel superior de títulos y HUD
@@ -85,9 +88,24 @@ class VistaHanoi:
             text="",
             font=("Segoe UI", 12, "bold"),
             bg=self.tema["fondo"],
-            fg=self.tema["texto_hud"]
+            fg=self.tema["texto_hud"],
+            relief="groove",
+            bd=1,
+            padx=8
         )
         self.lbl_movimientos.pack(side=tk.LEFT, padx=10)
+
+        self.lbl_estado = tk.Label(
+            self.frame_hud,
+            text="ESTADO: JUGANDO",
+            font=("Segoe UI", 9, "bold"),
+            bg=self.tema["fondo"],
+            fg=self.tema["mensaje_normal"],
+            relief="groove",
+            bd=1,
+            padx=8
+        )
+        self.lbl_estado.pack(side=tk.LEFT, padx=4)
 
         self.lbl_mensaje = tk.Label(
             self.frame_hud,
@@ -221,8 +239,8 @@ class VistaHanoi:
         if evento.width > 50 and evento.height > 50:
             self.ancho_canvas = evento.width
             self.alto_canvas = evento.height
-            self.y_base = int(self.alto_canvas * 0.76)
-            self.y_tope_palo = int(self.alto_canvas * 0.26)
+            self.y_base = int(self.alto_canvas * 0.82)
+            self.y_tope_palo = int(self.alto_canvas * 0.24)
             self.pos_x = [
                 int(self.ancho_canvas * 0.22),
                 int(self.ancho_canvas * 0.50),
@@ -274,6 +292,10 @@ class VistaHanoi:
             bg=self.tema["fondo"],
             fg=self.tema["texto_hud"]
         )
+        self.lbl_estado.configure(
+            bg=self.tema["fondo"],
+            fg=self.tema["mensaje_normal"]
+        )
         self.lbl_mensaje.configure(
             bg=self.tema["fondo"],
             fg=self.tema["mensaje_normal"]
@@ -303,6 +325,56 @@ class VistaHanoi:
 
         self.actualizar_vista()
 
+    def animar_ambiente(self):
+        # Mantiene vivos la nieve y los destellos sin tocar la partida
+        self.ambiente_paso = (self.ambiente_paso + 1) % 1000
+        self.actualizar_vista()
+        self.root.after(180, self.animar_ambiente)
+
+    def torres_validas(self):
+        if self.origen_seleccionado is None:
+            return []
+        return [
+            torre for torre in range(3)
+            if validar_movimiento(self.juego, self.origen_seleccionado, torre)[0]
+        ]
+
+    def registrar_movimiento_visual(self, origen, destino, disco):
+        # Muestra el recorrido para que el movimiento se entienda a simple vista
+        self.efecto_movimiento = (origen, destino, disco, 0.0)
+        self.actualizar_vista()
+        self.root.after(40, self.avanzar_movimiento_visual)
+
+    def avanzar_movimiento_visual(self):
+        if self.efecto_movimiento is None:
+            return
+        origen, destino, disco, progreso = self.efecto_movimiento
+        progreso += 0.12
+        if progreso >= 1:
+            self.efecto_movimiento = None
+        else:
+            self.efecto_movimiento = (origen, destino, disco, progreso)
+            self.root.after(40, self.avanzar_movimiento_visual)
+        self.actualizar_vista()
+
+    def dibujar_confeti(self):
+        colores = ["#EF4444", "#FACC15", "#22C55E", "#38BDF8", "#A855F7"]
+        formas = ["rectangulo", "circulo", "estrella", "cinta"]
+        centro = self.pos_x[2]
+        for indice in range(24):
+            x = centro - 260 + ((indice * 83 + self.ambiente_paso * 2) % 520)
+            y = 70 + ((indice * 47 + self.ambiente_paso * 3) % max(80, self.y_base - 120))
+            color = colores[indice % len(colores)]
+            forma = formas[indice % len(formas)]
+            if forma == "circulo":
+                self.canvas.create_oval(x, y, x + 7, y + 7, fill=color, outline="")
+            elif forma == "estrella":
+                self.dibujar_estrella(x + 4, y + 4, 5, 2, color, color)
+            elif forma == "cinta":
+                self.canvas.create_line(x, y, x + 8, y + 6, fill=color, width=3)
+            else:
+                self.canvas.create_rectangle(x, y, x + 8, y + 4, fill=color, outline="")
+
     def reiniciar(self):
         self.resolviendo = False
         self.juego = crear_juego(self.n_discos)
@@ -326,7 +398,7 @@ class VistaHanoi:
 
         if hay_victoria(self.juego):
             self.lbl_mensaje.config(
-                text="¡Ya ganaste! Presiona 'Reiniciar' para jugar otra partida.",
+                text=f"{self.tema['victoria']} Movimientos: {self.juego['movimientos']} (Mínimo: {minimo_teorico(self.juego['discos'])}).",
                 fg=self.tema["mensaje_victoria"]
             )
             return
@@ -393,6 +465,7 @@ class VistaHanoi:
             else:
                 valido, motivo = mover_disco(self.juego, origen, destino)
                 if valido:
+                    self.registrar_movimiento_visual(origen, destino, self.juego["torres"][destino][-1])
                     if hay_victoria(self.juego):
                         self.lbl_mensaje.config(
                             text=f"{self.tema['victoria']} Movimientos: {self.juego['movimientos']} (Mínimo: {minimo_teorico(self.juego['discos'])}).",
@@ -441,6 +514,7 @@ class VistaHanoi:
             else:
                 valido, motivo = mover_disco(self.juego, origen, destino)
                 if valido:
+                    self.registrar_movimiento_visual(origen, destino, self.juego["torres"][destino][-1])
                     if hay_victoria(self.juego):
                         self.lbl_mensaje.config(
                             text=f"{self.tema['victoria']} Movimientos: {self.juego['movimientos']} (Mínimo: {minimo_teorico(self.juego['discos'])}).",
@@ -524,6 +598,10 @@ class VistaHanoi:
             x1, y1 + radio,
             x1, y1
         ]
+        self.canvas.create_oval(
+            x1 + 8, y2 - 1, x2 - 8, y2 + 8,
+            fill="#000000", outline=""
+        )
         self.canvas.create_polygon(
             puntos,
             smooth=True,
@@ -537,6 +615,32 @@ class VistaHanoi:
             fill="white",
             width=2
         )
+        self.canvas.create_line(
+            (x1 + x2) // 2, y1 - 4,
+            (x1 + x2) // 2, y1,
+            fill="#FACC15",
+            width=2
+        )
+        self.canvas.create_oval(
+            x1 + 9, y1 + 5, x1 + 16, y1 + 12,
+            fill="#FFFFFF", outline=""
+        )
+        simbolos = ["●", "✦", "✿", "◆", "✹", "❄", "★", "✧"]
+        x_adorno = x2 - 14
+        y_adorno = (y1 + y2) // 2
+        self.canvas.create_oval(
+            x_adorno - 7, y_adorno - 7,
+            x_adorno + 7, y_adorno + 7,
+            fill="#FDE68A" if texto % 2 == 0 else "#FFFFFF",
+            outline="#FACC15",
+            width=1
+        )
+        self.canvas.create_text(
+            x_adorno, y_adorno,
+            text=simbolos[(texto - 1) % len(simbolos)],
+            fill="#0F172A",
+            font=("Segoe UI Symbol", 8, "bold")
+        )
         self.canvas.create_text(
             (x1 + x2) // 2, (y1 + y2) // 2,
             text=str(texto),
@@ -548,9 +652,19 @@ class VistaHanoi:
     def actualizar_vista(self):
         n = self.juego["discos"]
         minimo = minimo_teorico(n)
+        if hay_victoria(self.juego):
+            estado = "ESTADO: VICTORIA"
+            color_estado = self.tema["mensaje_victoria"]
+        elif self.resolviendo:
+            estado = "ESTADO: RESOLVIENDO"
+            color_estado = self.tema["mensaje_normal"]
+        else:
+            estado = "ESTADO: JUGANDO"
+            color_estado = self.tema["mensaje_normal"]
         self.lbl_movimientos.config(
             text=f"Movimientos: {self.juego['movimientos']}   |   Mínimo: {minimo}"
         )
+        self.lbl_estado.config(text=estado, fg=color_estado)
 
         self.canvas.delete("all")
 
@@ -670,8 +784,30 @@ class VistaHanoi:
                     y1 -= 16
                     y2 -= 16
 
+                if self.efecto_movimiento is not None:
+                    _, destino, disco_animado, _ = self.efecto_movimiento
+                    if torre_idx == destino and nivel == len(pila) - 1 and disco == disco_animado:
+                        continue
+
                 color_disco = self.tema["discos"][(disco - 1) % len(self.tema["discos"])]
                 self.dibujar_capsula(x1, y1, x2, y2, color_disco, disco)
+
+        if self.efecto_movimiento is not None:
+            origen, destino, disco, progreso = self.efecto_movimiento
+            x_movimiento = self.pos_x[origen] + (self.pos_x[destino] - self.pos_x[origen]) * progreso
+            altura_salto = math.sin(progreso * math.pi) * 90
+            y_movimiento = self.y_base - 40 - altura_salto
+            ancho_movimiento = ancho_minimo + (disco - 1) * paso_ancho
+            x1_movimiento = int(x_movimiento - ancho_movimiento / 2)
+            x2_movimiento = int(x_movimiento + ancho_movimiento / 2)
+            y1_movimiento = int(y_movimiento - alto_disco / 2)
+            y2_movimiento = int(y_movimiento + alto_disco / 2)
+            color_movimiento = self.tema["discos"][(disco - 1) % len(self.tema["discos"])]
+            self.dibujar_capsula(
+                x1_movimiento, y1_movimiento,
+                x2_movimiento, y2_movimiento,
+                color_movimiento, disco
+            )
 
         # 6. Disco flotante mientras se arrastra con ratón (Drag & Drop)
         if self.drag_activo and self.disco_arrastrado is not None:
@@ -697,8 +833,15 @@ class VistaHanoi:
 
         if ganado:
             altura_arbol = len(self.juego["torres"][2]) * separacion
-            y_estrella = self.y_base - altura_arbol - 22
+            y_estrella = self.y_base - altura_arbol - 40
             x_estrella = self.pos_x[2]
+            radio_halo = 32 + int(4 * math.sin(self.ambiente_paso / 3))
+            self.canvas.create_oval(
+                x_estrella - radio_halo, y_estrella - radio_halo,
+                x_estrella + radio_halo, y_estrella + radio_halo,
+                outline=self.tema["mensaje_victoria"],
+                width=2
+            )
             self.dibujar_estrella(x_estrella, y_estrella, 26, 11, color_estrella, borde_estrella)
 
             titulo_victoria = self.tema.get("victoria_titulo", "¡Felices fiestas!")
@@ -716,6 +859,17 @@ class VistaHanoi:
             )
         else:
             self.dibujar_estrella(self.pos_x[2], self.y_tope_palo - 16, 16, 7, color_estrella, borde_estrella)
+
+        if ganado:
+            self.dibujar_confeti()
+
+        for torre in self.torres_validas():
+            x = self.pos_x[torre]
+            self.canvas.create_oval(
+                x - 42, self.y_base - 10, x + 42, self.y_base + 18,
+                outline=self.tema["mensaje_victoria"],
+                width=3
+            )
 
     def resolver_automatico(self):
         if self.resolviendo:
