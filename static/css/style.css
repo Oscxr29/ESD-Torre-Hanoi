@@ -1,0 +1,314 @@
+/* style.css: Estilos visuales para la versión web de la Torre de Hanói */
+
+:root {
+  /* Variables para Modo Noche (por defecto) */
+  --bg-principal: #040B16;
+  --bg-canvas: #040B16;
+  --color-texto: #FFFFFF;
+  --color-hud: #F8FAFC;
+  --color-mensaje: #93C5FD;
+  --color-error: #FF6B6B;
+  --color-victoria: #FACC15;
+  --border-badge: rgba(255, 255, 255, 0.15);
+  --bg-badge: rgba(15, 23, 42, 0.7);
+  --btn-tema-bg: #FBBF24;
+  --btn-tema-fg: #1E1B4B;
+  --sombra-canvas: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+body.tema-dia {
+  /* Variables para Modo Día */
+  --bg-principal: #BAE6FD;
+  --bg-canvas: #7DD3FC;
+  --color-texto: #0F172A;
+  --color-hud: #0F172A;
+  --color-mensaje: #1E3A8A;
+  --color-error: #DC2626;
+  --color-victoria: #15803D;
+  --border-badge: rgba(15, 23, 42, 0.15);
+  --bg-badge: rgba(255, 255, 255, 0.85);
+  --btn-tema-bg: #0F172A;
+  --btn-tema-fg: #FFFFFF;
+  --sombra-canvas: 0 10px 30px rgba(14, 116, 144, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: var(--bg-principal);
+  color: var(--color-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+#contenedor-principal {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 10px 24px;
+}
+
+/* 1. Panel Superior / HUD */
+#panel-superior {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 6px;
+}
+
+.fila-superior {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#titulo-juego {
+  font-size: 1.45rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hud-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hud-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--bg-badge);
+  border: 1px solid var(--border-badge);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-hud);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.badge .label {
+  opacity: 0.85;
+}
+
+.badge .valor {
+  font-size: 1.05rem;
+  color: #38BDF8;
+}
+
+.badge .separador {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+
+.badge-estado {
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-estado.jugando {
+  border-color: #38BDF8;
+  color: #38BDF8;
+}
+
+.badge-estado.victoria {
+  border-color: #FACC15;
+  color: #FACC15;
+  background: rgba(250, 204, 21, 0.15);
+  animation: pulso 1.2s infinite alternate;
+}
+
+@keyframes pulso {
+  from { transform: scale(1); box-shadow: 0 0 5px rgba(250, 204, 21, 0.3); }
+  to { transform: scale(1.04); box-shadow: 0 0 16px rgba(250, 204, 21, 0.7); }
+}
+
+#hud-mensaje {
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-mensaje);
+  min-height: 24px;
+  transition: color 0.2s ease;
+}
+
+#hud-mensaje.error {
+  color: var(--color-error) !important;
+  animation: sacudida 0.35s ease;
+}
+
+#hud-mensaje.victoria {
+  color: var(--color-victoria) !important;
+  font-size: 1.1rem;
+}
+
+@keyframes sacudida {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.hud-derecha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.selector-discos {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.selector-discos select {
+  padding: 4px 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 6px;
+  background: var(--bg-badge);
+  color: var(--color-texto);
+  border: 1px solid var(--border-badge);
+  cursor: pointer;
+  outline: none;
+}
+
+.selector-discos select option {
+  background: #0F172A;
+  color: #FFFFFF;
+}
+
+.btn-secundario {
+  padding: 5px 12px;
+  background: #374151;
+  color: #F9FAFB;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secundario:hover {
+  background: #4B5563;
+  transform: translateY(-1px);
+}
+
+/* 2. Lienzo Central */
+#lienzo-contenedor {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--sombra-canvas);
+}
+
+#canvas-hanoi {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+#canvas-hanoi.arrastrando {
+  cursor: grabbing;
+}
+
+/* 3. Panel Inferior de Botones */
+#panel-inferior {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.controles-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.08);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-peligro {
+  background: #E63946;
+  color: #FFFFFF;
+}
+
+.btn-exito {
+  background: #2A9D8F;
+  color: #FFFFFF;
+}
+
+.btn-tema {
+  background: var(--btn-tema-bg);
+  color: var(--btn-tema-fg);
+}
+
+.controles-derecha {
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.8;
+}

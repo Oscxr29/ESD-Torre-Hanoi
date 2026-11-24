@@ -21,11 +21,11 @@
      *Rol:* Estructuras de Datos y Lógica Central (`torres.py`, `reglas.py`, `solucion.py`).  
      *Defensa individual:* Pilas LIFO, operaciones primitivas `push`/`pop`/`tope`, validaciones de reglas y recursividad algorítmica.
   2. **Alex Gabriel Rivera Trujillo — U20250475**  
-     *Rol:* Interfaz de Terminal y Flujo de Juego (`vista.py`, `main.py`).  
-     *Defensa individual:* Representación textual de las torres, bucle de ejecución con revancha, validación de entradas con `.isdigit()` y mensajes de consola.
+     *Rol:* Controlador Web, API Flask y Flujo de Ejecución (`app.py`, `main.py`).  
+     *Defensa individual:* Arquitectura de rutas HTTP con Flask, serialización JSON de estados, endpoints REST de validación de jugadas y desacoplamiento del backend con el navegador.
   3. **Henry Aldair Zelaya Cortez — U20251250**  
-     *Rol:* Interfaz Gráfica e Interacción UI/UX (`vista_grafica.py`, `temas.py`, `main_grafico.py`).  
-     *Defensa individual:* Arquitectura de eventos en Tkinter, canvas responsivo dinámico, mecánica de arrastrar y soltar (*Drag & Drop*), pantalla completa (F11) y temas Día/Noche.
+     *Rol:* Interfaz Gráfica y Experiencia Visual (`static/`, `templates/`, `temas.py`).  
+     *Defensa individual:* Renderizado vectorial en Canvas HTML5, mecánicas de arrastrar y soltar (*Drag & Drop*), física de salto parabólico, adaptabilidad responsiva y conmutación de temas Día/Noche.
   4. **Isvi José Castillo Cruz — U20251323**  
      *Rol:* Aseguramiento de Calidad, Pruebas y Documentación (`pruebas.py`, `evidencias/`, `docs/`, `README.md`).  
      *Defensa individual:* Batería de 22 pruebas unitarias automatizadas, cobertura de casos válidos/inválidos, evidencias y documentación técnica.
@@ -142,11 +142,11 @@ El software sigue una arquitectura desacoplada donde cada archivo posee una resp
 | `reglas.py` | `mover_disco(...)` | `juego, origen, destino` | `tuple(bool, str)` | Aplica `push`/`pop` y suma al contador si es válido. |
 | `reglas.py` | `hay_victoria(juego)` | `juego: dict` | `bool` | Retorna `True` si la Torre 3 tiene los $n$ discos. |
 | `solucion.py` | `resolver(...)` | `n, orig, dest, aux, pasos` | `None` | Genera recursivamente la secuencia óptima. |
-| `vista.py` | `mostrar_juego(juego)` | `juego: dict` | `None` | Renderiza el tablero en texto en la terminal. |
-| `main.py` | `jugar()` | Ninguno | `None` | Bucle de juego en consola con revancha. |
+| `app.py` | `iniciar()`, `mover()`, `resolver_hanoi()` | Endpoints REST | `JSON` | Controlador web Flask que comunica el frontend con el modelo. |
+| `main.py` | `main()` | Ninguno | `None` | Punto de entrada principal que levanta Flask y abre el navegador. |
 | `temas.py` | Diccionario `TEMAS` | Ninguno | `dict` | Paletas y componentes para Día y Noche. |
-| `vista_grafica.py`| Clase `VistaHanoi` | `root: Tk`, `tema: dict` | Instancia UI | Interfaz con Canvas, Drag & Drop y F11. |
-| `main_grafico.py`| `main()` | Ninguno | `None` | Punto de entrada para la ventana gráfica. |
+| `templates/index.html` | Vista HTML5 | Plantilla Jinja2 | `HTML` | Estructura del tablero, HUD de movimientos y controles. |
+| `static/js/app.js` | Motor interactivo Canvas | Eventos DOM | `None` | Renderizado gráfico, Drag & Drop y animaciones. |
 | `pruebas.py` | `comprobar(...)` | `nombre, obtenido, esperado` | `None` | Ejecuta las 22 pruebas unitarias automatizadas. |
 
 ---
@@ -288,5 +288,5 @@ Para la evaluación oral ante el docente o la presentación en feria académica,
 ## 10. Conclusiones y Aprendizajes
 
 1. **Pertinencia de las Estructuras Abstractas:** El proyecto demostró que la elección adecuada de una estructura de datos (Pila) no es un mero formalismo teórico, sino una herramienta de simplificación algorítmica: al restringir el acceso a la cima, las reglas fundamentales del juego se imponen por naturaleza estructural.
-2. **Desacoplamiento Efectivo:** Lograr que la consola (`main.py`), la interfaz de ventana (`main_grafico.py`) y la batería de pruebas (`pruebas.py`) consuman de forma transparente el mismo archivo `reglas.py` valida la importancia de los principios de diseño de software modular y contratos de función estables.
+2. **Desacoplamiento Efectivo (Arquitectura MVC):** Lograr que la interfaz web interactiva (`app.py` + `templates/` + `static/`) y la batería de pruebas automatizadas (`pruebas.py`) consuman de forma transparente el mismo núcleo de lógica (`reglas.py`, `torres.py`) valida la importancia de los principios de diseño de software modular y contratos de función estables.
 3. **Dualidad Estructural en Recursión:** Comprender que la pila de llamadas (*Call Stack*) del procesador es idéntica en comportamiento a la pila de discos del juego afianzó el entendimiento profundo de los mecanismos internos de la memoria durante la ejecución de algoritmos recursivos.

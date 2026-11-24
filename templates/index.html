@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torre de Hanói — Edición Navideña</title>
+  <!-- Flask vincula los archivos estáticos usando url_for -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="tema-noche">
+  <div id="contenedor-principal">
+    
+    <!-- 1. Panel Superior / HUD -->
+    <header id="panel-superior">
+      <div class="fila-superior">
+        <h1 id="titulo-juego">Torre de Hanói: Navidad (Noche) 🌙</h1>
+      </div>
+
+      <div class="hud-barra">
+        <div class="hud-izquierda">
+          <!-- Contador de movimientos y mínimo teórico -->
+          <div id="badge-movimientos" class="badge">
+            <span class="label">MOVIMIENTOS:</span>
+            <span id="valor-movimientos" class="valor">0</span>
+            <span class="separador">|</span>
+            <span class="label">MÍNIMO:</span>
+            <span id="valor-minimo" class="valor">7</span>
+          </div>
+
+          <!-- Estado de la partida -->
+          <div id="badge-estado" class="badge badge-estado jugando">
+            ESTADO: JUGANDO
+          </div>
+        </div>
+
+        <!-- Mensajes informativos y de error -->
+        <div id="hud-mensaje" class="mensaje">
+          Arrastra los discos entre torres o haz clic para mover.
+        </div>
+
+        <div class="hud-derecha">
+          <!-- Selector de cantidad de discos (3 a 8) -->
+          <div class="selector-discos">
+            <label for="select-discos">Discos:</label>
+            <select id="select-discos">
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+
+          <!-- Pantalla completa -->
+          <button id="btn-fullscreen" class="btn-secundario" title="Pantalla completa">
+            ⛶ Pantalla Completa (F11)
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Canvas interactivo central -->
+    <main id="lienzo-contenedor">
+      <canvas id="canvas-hanoi"></canvas>
+    </main>
+
+    <!-- 3. Panel Inferior de Botones de Control -->
+    <footer id="panel-inferior">
+      <div class="controles-izquierda">
+        <button id="btn-reiniciar" class="btn btn-peligro">
+          ↺ Reiniciar
+        </button>
+
+        <button id="btn-resolver" class="btn btn-exito">
+          ⚡ Resolver automático (Recursión)
+        </button>
+
+        <button id="btn-tema" class="btn btn-tema">
+          ☀️ Cambiar a Modo Día
+        </button>
+      </div>
+
+      <div class="controles-derecha">
+        <span id="texto-ayuda">
+          Arrastra los discos libremente o haz clic para mover · UNIVO Estructura de Datos
+        </span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Vinculación del script del Canvas -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
